@@ -17,33 +17,33 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String firstName;
 
 
     private String middleName;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String address;
 
     private Date dateOfBirth;
 
 
-    private String role;
+    private String gender;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String password;
 
-    private Date createdAt;
+    private Date createdAt = new Date();
 
-    private Date updatedAt;
+    private Date updatedAt = new Date();
 }
