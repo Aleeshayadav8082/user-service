@@ -1,5 +1,6 @@
 package com.maveric.userservice.service.impl;
 
+import com.maveric.userservice.exception.UserNotFoundException;
 import com.maveric.userservice.repository.UserRepository;
 import com.maveric.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(long id) {
+        userRepository.findById(id).orElseThrow(
+                ()->new UserNotFoundException(id)
+        );
         userRepository.deleteById(id);
     }
 }
