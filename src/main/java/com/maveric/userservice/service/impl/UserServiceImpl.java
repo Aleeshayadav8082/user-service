@@ -1,5 +1,6 @@
 package com.maveric.userservice.service.impl;
 
+import com.maveric.userservice.exception.UserNotFoundException;
 import com.maveric.userservice.model.User;
 import com.maveric.userservice.repository.UserRepository;
 import com.maveric.userservice.service.UserService;
@@ -22,7 +23,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserId(long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.get();
+        if(user.isPresent()){
+            return user.get();
+        }
+        else {
+            throw new UserNotFoundException("No user found with id " + id);
+        }
     }
 }
 
