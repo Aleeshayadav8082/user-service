@@ -1,5 +1,7 @@
 package com.maveric.userservice.service.impl;
 
+import com.maveric.userservice.converter.DtoToModelConverter;
+import com.maveric.userservice.dto.UserDto;
 import com.maveric.userservice.model.User;
 import com.maveric.userservice.repository.UserRepository;
 import com.maveric.userservice.service.UserService;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,19 +20,24 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private DtoToModelConverter dtoToModelConverter;
+
+    @Autowired
     public UserServiceImpl(UserRepository userRepository) {
-       super();
+        super();
         this.userRepository = userRepository;
     }
 
     @Override
-    public List<User> getAllUser(Integer pageNumber, Integer pageSize) {
+    public List<UserDto> getAllUser(int pageNumber, int pageSize) {
 
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<User> userPage = userRepository.findAll(pageable);
 
-        Pageable p = PageRequest.of(pageNumber,pageSize);
-        Page<User> pagePost =  userRepository.findAll(p);
-        List<User> allUsers = pagePost.getContent();
-        return  allUsers;
+        List<User> users = userPage.getContent();
+        List<UserDto> userDtos = users.stream().map(user -> dtoToModelConverter.userToDtoUpdate(user)).collect(Collectors.toList());
+
+        return userDtos;
     }
 }
 
