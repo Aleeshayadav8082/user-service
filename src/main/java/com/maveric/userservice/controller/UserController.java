@@ -1,6 +1,6 @@
 package com.maveric.userservice.controller;
 
-import com.maveric.userservice.model.User;
+import com.maveric.userservice.dto.UserDto;
 import com.maveric.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUserDetails(@RequestBody User user){
-        return new ResponseEntity<User>(userService.createUserDetails(user), HttpStatus.CREATED);
+    public ResponseEntity<UserDto> createUserDetails(@RequestBody UserDto userDto) {
+        return new ResponseEntity<UserDto>(userService.createUserDetails(userDto), HttpStatus.CREATED);
     }
 }

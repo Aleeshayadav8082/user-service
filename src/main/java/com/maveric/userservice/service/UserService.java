@@ -1,8 +1,8 @@
 package com.maveric.userservice.service;
 
-import com.maveric.userservice.model.User;
+import com.maveric.userservice.dto.UserDto;
 
 public interface UserService {
 
-    User createUserDetails(User user) ;
+    UserDto createUserDetails(UserDto userDto) ;
 }
