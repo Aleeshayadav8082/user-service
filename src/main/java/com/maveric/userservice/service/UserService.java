@@ -1,7 +1,7 @@
 package com.maveric.userservice.service;
 
-import com.maveric.userservice.model.User;
+import com.maveric.userservice.dto.UserDto;
 
 public interface UserService {
-    User updateuser(long userId, User user);
+    UserDto updateUser(UserDto userDto, long userId);
 }
