@@ -12,8 +12,13 @@ import com.maveric.userservice.model.User;
 import com.maveric.userservice.repository.UserRepository;
 import com.maveric.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Optional;
 
 @Service
@@ -30,6 +35,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDto> getAllUser(int pageNumber, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<User> userPage = userRepository.findAll(pageable);
+
+        List<User> users = userPage.getContent();
+        List<UserDto> userDtos = users.stream().map(user -> dtoToModelConverter.userToDtoUpdate(user)).collect(Collectors.toList());
+
+        return userDtos;
     public UserDto getUserByEmail(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(
                 ()-> new UserNotFoundException("User not found with email " + email));
