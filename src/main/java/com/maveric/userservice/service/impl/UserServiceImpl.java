@@ -1,5 +1,6 @@
 package com.maveric.userservice.service.impl;
 
+import com.maveric.userservice.exception.UserNotFoundException;
 import com.maveric.userservice.converter.DtoToModelConverter;
 import com.maveric.userservice.dto.UserDto;
 import com.maveric.userservice.exception.UserNotFoundException;
@@ -67,6 +68,11 @@ public class UserServiceImpl implements UserService {
         User updatedUser = userRepository.save(existingUser);
         UserDto userDto1 = dtoToModelConverter.userToDtoUpdate(updatedUser);
         return userDto1;
+    public void deleteUser(long id) {
+        userRepository.findById(id).orElseThrow(
+                ()->new UserNotFoundException("User not found " + id)
+        );
+        userRepository.deleteById(id);
     }
 }
 
