@@ -30,6 +30,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(
+                ()-> new UserNotFoundException("User not found with email " + email));
+        return dtoToModelConverter.userToDtoUpdate(user);
     public UserDto createUserDetails(UserDto userDto) {
         User user =dtoToModelConverter.dtoToUserCreate(userDto);
         Optional<User> storedUser = userRepository.findUserByEmail(user.getEmail());
