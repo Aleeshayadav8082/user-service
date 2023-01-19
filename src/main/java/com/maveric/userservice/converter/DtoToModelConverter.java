@@ -6,6 +6,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DtoToModelConverter {
+//    public User dtoToUserUpdate(UserDto userDto) {
+//        User user = new User();
+//        user.setId(userDto.getId());
+//        user.setFirstName(userDto.getFirstName());
+//        user.setMiddleName(userDto.getMiddleName());
+//        user.setLastName(userDto.getLastName());
+//        user.setEmail(userDto.getEmail());
+//        user.setPhoneNumber(userDto.getPhoneNumber());
+//        user.setAddress(userDto.getAddress());
+//        user.setDateOfBirth(userDto.getDateOfBirth());
+//        user.setGender(userDto.getGender());
+//        return user;
+//    }
+
+    public UserDto userToDtoUpdate(User user) {
 
     public User dtoToUserCreate(UserDto userDto) {
         User user = new User();
