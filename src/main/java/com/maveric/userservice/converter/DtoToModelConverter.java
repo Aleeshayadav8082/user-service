@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DtoToModelConverter {
+    public UserDto userToDtoUpdate(User user) {
 //    public User dtoToUserUpdate(UserDto userDto) {
 //        User user = new User();
 //        user.setId(userDto.getId());

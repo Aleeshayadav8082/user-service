@@ -1,5 +1,8 @@
 package com.maveric.userservice.service.impl;
 
+import com.maveric.userservice.converter.DtoToModelConverter;
+import com.maveric.userservice.dto.UserDto;
+import com.maveric.userservice.exception.UserNotFoundException;
 import com.maveric.userservice.exception.UserNotFoundException;
 import com.maveric.userservice.converter.DtoToModelConverter;
 import com.maveric.userservice.dto.UserDto;
@@ -39,7 +42,6 @@ public class UserServiceImpl implements UserService {
 }
 @Service
 public class UserServiceImpl implements UserService {
-
     private UserRepository userRepository;
 
     @Autowired
@@ -52,6 +54,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto getUserById(long id) {
+        User user = userRepository.findById(id).orElseThrow(
+
+
+
+
+                ()-> new UserNotFoundException("User not found with id " + id));
+
+        return dtoToModelConverter.userToDtoUpdate(user);
     public UserDto updateUser(UserDto userDto, long userId) {
         User existingUser = userRepository.findById(userId).orElseThrow(
                 ()->new UserNotFoundException("User not Found with id " + userId));

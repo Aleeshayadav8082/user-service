@@ -3,6 +3,14 @@ package com.maveric.userservice.controller;
 import com.maveric.userservice.dto.UserDto;
 import com.maveric.userservice.model.User;
 import com.maveric.userservice.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
+
     private UserService userService;
 
     @Autowired
@@ -41,6 +50,9 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable("userId") long id){
+        return new ResponseEntity<UserDto>(userService.getUserById(id), HttpStatus.OK);
     @PutMapping("/users/{userId}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("userId") long userId, @RequestBody UserDto userDto){
         return new ResponseEntity<UserDto>(userService.updateUser(userDto, userId), HttpStatus.OK);
