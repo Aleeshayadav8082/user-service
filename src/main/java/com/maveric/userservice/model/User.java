@@ -18,14 +18,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(nullable = false)
     private String firstName;
-    private String middleName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
 
-    //@Column(nullable = false)
+    private String middleName;
+
     private String lastName;
 
     //@Column(nullable = false)
@@ -36,6 +32,7 @@ public class User {
 
     //@Column(nullable = false)
     private String address;
+
     private Date dateOfBirth;
 
     @Enumerated(EnumType.STRING)
@@ -45,12 +42,6 @@ public class User {
 
     @Column(updatable = false)
     private Date createdAt = new Date();
-    private String gender;
-
-    //@Column(nullable = false)
-    private String password;
-
-    private Date createdAt= new Date();
 
     private Date updatedAt = new Date();
 }

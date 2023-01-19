@@ -6,23 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DtoToModelConverter {
-    public UserDto userToDtoUpdate(User user) {
-//    public User dtoToUserUpdate(UserDto userDto) {
-//        User user = new User();
-//        user.setId(userDto.getId());
-//        user.setFirstName(userDto.getFirstName());
-//        user.setMiddleName(userDto.getMiddleName());
-//        user.setLastName(userDto.getLastName());
-//        user.setEmail(userDto.getEmail());
-//        user.setPhoneNumber(userDto.getPhoneNumber());
-//        user.setAddress(userDto.getAddress());
-//        user.setDateOfBirth(userDto.getDateOfBirth());
-//        user.setGender(userDto.getGender());
-//        return user;
-//    }
-
-    public UserDto userToDtoUpdate(User user) {
-
     public User dtoToUserCreate(UserDto userDto) {
         User user = new User();
         user.setId(userDto.getId());
@@ -50,6 +33,48 @@ public class DtoToModelConverter {
         userDto.setDateOfBirth(user.getDateOfBirth());
         userDto.setPassword(user.getPassword());
         userDto.setGender(user.getGender());
+        return userDto;
+    }
+
+    public User dtoToUserUpdate(UserDto userDto) {
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setFirstName(userDto.getFirstName());
+        user.setMiddleName(userDto.getMiddleName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setAddress(userDto.getAddress());
+        user.setDateOfBirth(userDto.getDateOfBirth());
+        user.setGender(userDto.getGender());
+        return user;
+    }
+    public UserDto userToDtoUpdate(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setMiddleName(user.getMiddleName());
+        userDto.setLastName(user.getLastName());
+        userDto.setEmail(user.getEmail());
+        userDto.setPhoneNumber(user.getPhoneNumber());
+        userDto.setAddress(user.getAddress());
+        userDto.setDateOfBirth(user.getDateOfBirth());
+        userDto.setGender(user.getGender());
+        return userDto;
+    }
+
+    public UserDto userToDtoEmail(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setMiddleName(user.getMiddleName());
+        userDto.setLastName(user.getLastName());
+        userDto.setEmail(user.getEmail());
+        userDto.setPhoneNumber(user.getPhoneNumber());
+        userDto.setAddress(user.getAddress());
+        userDto.setDateOfBirth(user.getDateOfBirth());
+        userDto.setGender(user.getGender());
+        userDto.setPassword(user.getPassword());
         return userDto;
     }
 }
