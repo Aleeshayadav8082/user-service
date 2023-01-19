@@ -6,6 +6,9 @@ import com.maveric.userservice.constraints.GenderValidator;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.util.Date;
@@ -46,4 +49,20 @@ public class UserDto {
     @Enumerated(EnumType.STRING)
     @GenderValidator(anyOfTheseGender = {Gender.FEMALE, Gender.MALE})
     private Gender gender;
+}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    private String address;
+    private Date dateOfBirth;
+    private String password;
+    private String gender;
+
 }

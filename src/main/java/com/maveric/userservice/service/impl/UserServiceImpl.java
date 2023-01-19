@@ -35,3 +35,16 @@ public class UserServiceImpl implements UserService {
         return dtoToModelConverter.userToDtoCreate(savedUser);
     }
 }
+@Service
+public class UserServiceImpl implements UserService {
+
+    private UserRepository userRepository;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
+       super();
+        this.userRepository = userRepository;
+    }
+}
+
+
