@@ -20,6 +20,10 @@ public class UserController {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 import com.maveric.userservice.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,6 +37,10 @@ public class UserController {
         this.userService = userService;
     }
 
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable("userId") long id) {
+        userService.deleteUser(id);
+        return  new ResponseEntity<String>("User has been deleted", HttpStatus.OK);
     @PostMapping("/users")
     public ResponseEntity<UserDto> createUserDetails(@Valid @RequestBody UserDto userDto) {
         userDto.setPassword(this.bCryptPasswordEncoder.encode(userDto.getPassword()));
