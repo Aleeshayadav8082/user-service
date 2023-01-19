@@ -26,6 +26,7 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<UserDto> createUserDetails(@Valid @RequestBody UserDto userDto) {
+        userDto.setPassword(this.bCryptPasswordEncoder.encode(userDto.getPassword()));
         return new ResponseEntity<UserDto>(userService.createUserDetails(userDto), HttpStatus.CREATED);
     }
 }
