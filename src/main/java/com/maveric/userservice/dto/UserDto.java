@@ -7,9 +7,6 @@ import com.maveric.userservice.constraints.GenderValidator;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
-
-
-
 import lombok.Data;
 
 import java.util.Date;
