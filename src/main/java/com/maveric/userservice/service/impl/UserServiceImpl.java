@@ -12,9 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 
 @Service
@@ -69,8 +69,8 @@ public class UserServiceImpl implements UserService {
         Page<User> userPage = userRepository.findAll(pageable);
 
         List<User> users = userPage.getContent();
-        List<UserDto> userDtos = users.stream().map(user -> dtoToModelConverter.userToDtoUpdate(user)).collect(Collectors.toList());
-        return userDtos;
+        return users.stream().map(user -> dtoToModelConverter.userToDtoUpdate(user)).toList();
+
     }
 
     @Override
@@ -89,10 +89,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(long id) {
-        userRepository.findById(id).orElseThrow(
-                ()->new UserNotFoundException("User not found with id " + id));
+        if (userRepository.findById(id).isPresent()){
+            userRepository.deleteById(id);
+        }
+        else {
+            throw new UserNotFoundException("User not found with id " + id);
+        }
 
-        userRepository.deleteById(id);
     }
 }
 
