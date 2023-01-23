@@ -15,20 +15,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
-    private DtoToModelConverter dtoToModelConverter;
+     DtoToModelConverter dtoToModelConverter;
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        super();
-        this.userRepository = userRepository;
-    }
+
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -69,11 +67,14 @@ public class UserServiceImpl implements UserService {
         Page<User> userPage = userRepository.findAll(pageable);
 
         List<User> users = userPage.getContent();
+<<<<<<< HEAD
         return users.stream().map(user -> dtoToModelConverter.userToDtoUpdate(user)).toList();
 
+
+        List<UserDto> userDtos = users.stream().map(user -> dtoToModelConverter.userToDtoUpdate(user)).collect(Collectors.toList());
+>>>>>>> f2abab692b14232282454e94f66432a32a3f771f
     }
 
-    @Override
     public UserDto getUserById(long id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User not found with id " + id));
