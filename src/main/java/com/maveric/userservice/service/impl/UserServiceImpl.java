@@ -15,18 +15,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     UserRepository userRepository;
 
     @Autowired
-     DtoToModelConverter dtoToModelConverter;
-
-
+    DtoToModelConverter dtoToModelConverter;
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -39,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(UserDto userDto, long userId) {
+    public UserDto updateUser(UserDto userDto, String userId) {
         User existingUser = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("User not Found with id " + userId));
         if(userRepository.findUserByEmail(userDto.getEmail()).isPresent()){
@@ -67,15 +65,13 @@ public class UserServiceImpl implements UserService {
         Page<User> userPage = userRepository.findAll(pageable);
 
         List<User> users = userPage.getContent();
-<<<<<<< HEAD
+
         return users.stream().map(user -> dtoToModelConverter.userToDtoUpdate(user)).toList();
 
 
-        List<UserDto> userDtos = users.stream().map(user -> dtoToModelConverter.userToDtoUpdate(user)).collect(Collectors.toList());
->>>>>>> f2abab692b14232282454e94f66432a32a3f771f
     }
 
-    public UserDto getUserById(long id) {
+    public UserDto getUserById(String id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User not found with id " + id));
         return dtoToModelConverter.userToDtoUpdate(user);
@@ -89,7 +85,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(long id) {
+    public void deleteUser(String id) {
         if (userRepository.findById(id).isPresent()){
             userRepository.deleteById(id);
         }

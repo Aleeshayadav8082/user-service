@@ -55,10 +55,10 @@ class UserServiceImplTest {
     @Test
     void getUserById(){
 
-        when(mockedUserRepository.findById(1L)).thenReturn(Optional.of(getUser()));
+        when(mockedUserRepository.findById("1L")).thenReturn(Optional.of(getUser()));
         when(dtoToModelConverter.userToDtoUpdate(any(User.class))).thenReturn(getUserDto());
 
-        UserDto userDto = mockedUserService.getUserById(1L);
+        UserDto userDto = mockedUserService.getUserById("1L");
 
         assertNotNull(userDto);
         assertSame(userDto.getEmail(), getUser().getEmail());
@@ -77,10 +77,10 @@ class UserServiceImplTest {
 
     @Test
     void updateUser(){
-        when(mockedUserRepository.findById(1L)).thenReturn(Optional.ofNullable(getUser()));
+        when(mockedUserRepository.findById("1L")).thenReturn(Optional.ofNullable(getUser()));
         when(dtoToModelConverter.userToDtoUpdate(mockedUserRepository.save(getUser()))).thenReturn(getUserDto());
 
-        UserDto user = mockedUserService.updateUser(getUserDto(), 1L);
+        UserDto user = mockedUserService.updateUser(getUserDto(), "1L");
 
         assertNotNull(user);
         assertSame(user.getEmail(),getUser().getEmail());
@@ -88,12 +88,12 @@ class UserServiceImplTest {
 
     @Test
     void deleteUser(){
-        when(mockedUserRepository.findById(1L)).thenReturn(Optional.of(getUser()));
-        willDoNothing().given(mockedUserRepository).deleteById(1L);
+        when(mockedUserRepository.findById("1L")).thenReturn(Optional.of(getUser()));
+        willDoNothing().given(mockedUserRepository).deleteById("1L");
 
-        mockedUserService.deleteUser(1L);
+        mockedUserService.deleteUser("1L");
 
-        verify(mockedUserRepository).deleteById(1L);
+        verify(mockedUserRepository).deleteById("1L");
     }
 
 

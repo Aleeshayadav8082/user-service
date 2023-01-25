@@ -1,6 +1,5 @@
 package com.maveric.userservice.converter;
 
-import com.maveric.userservice.constant.Gender;
 import com.maveric.userservice.dto.UserDto;
 import com.maveric.userservice.model.User;
 import org.junit.jupiter.api.Test;

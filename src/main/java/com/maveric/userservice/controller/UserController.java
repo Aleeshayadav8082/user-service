@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{userId}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("userId") long userId, @Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable("userId") String userId, @Valid @RequestBody UserDto userDto) {
         return new ResponseEntity<UserDto>(userService.updateUser(userDto, userId), HttpStatus.OK);
     }
 
@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable("userId") long id) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable("userId") String id) {
         return new ResponseEntity<UserDto>(userService.getUserById(id), HttpStatus.OK);
     }
 
@@ -61,8 +61,8 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable("userId") long id){
-        userService.deleteUser(id);
+    public ResponseEntity<String> deleteUser(@PathVariable("userId") String id){
+        userService.deleteUser("id");
         return new ResponseEntity<>("User Deleted Successfully", HttpStatus.OK);
     }
 }

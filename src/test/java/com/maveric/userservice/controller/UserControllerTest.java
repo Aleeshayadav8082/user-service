@@ -66,7 +66,7 @@ class UserControllerTest {
     @Test
     void shouldThrowErrorWhenCreateUserDetailsAreWrong() throws Exception{
         UserDto user = new UserDto();
-        user.setId(1l);
+        user.setId("1l");
         user.setFirstName(null);
         user.setMiddleName("");
         user.setLastName("Yadav");
@@ -86,7 +86,7 @@ class UserControllerTest {
     }
     @Test
     void getUserById() throws Exception{
-        when(userService.getUserById(anyLong())).thenReturn(getUserDto());
+        when(userService.getUserById(anyString())).thenReturn(getUserDto());
         mockMvc.perform(get(API_V1_USERS + "/" + 1L))
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -95,7 +95,7 @@ class UserControllerTest {
 
     @Test
     void shouldReturnErrorWhenWrongUserIdForGetUserByID() throws Exception{
-        when(userService.getUserById(anyLong())).thenThrow(new UserNotFoundException("User Not found"));
+        when(userService.getUserById(anyString())).thenThrow(new UserNotFoundException("User Not found"));
         mockMvc.perform(get(API_V1_USERS+"/" + 2L))
                 .andExpect(status().isNotFound())
                 .andDo(print());
@@ -122,7 +122,7 @@ class UserControllerTest {
 
     @Test
     void updateUser() throws Exception {
-        when(userService.updateUser(any(UserDto.class), anyLong())).thenReturn(getUserDto());
+        when(userService.updateUser(any(UserDto.class), anyString())).thenReturn(getUserDto());
         mockMvc.perform(put(API_V1_USERS + "/" +1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(getUser()))).andExpect(status().isOk())
@@ -132,7 +132,7 @@ class UserControllerTest {
     @Test
     void shouldThrowErrorWhenUpdateUserDetailsAreWrong() throws Exception{
         UserDto user = new UserDto();
-        user.setId(1l);
+        user.setId("1l");
         user.setFirstName(null);
         user.setMiddleName("");
         user.setLastName("Yadav");
@@ -171,7 +171,7 @@ class UserControllerTest {
 
     public static User getUser() {
         User user = new User();
-        user.setId(1l);
+        user.setId("1l");
         user.setFirstName("Aleesha");
         user.setMiddleName("");
         user.setLastName("Yadav");
@@ -187,7 +187,7 @@ class UserControllerTest {
 
     public static UserDto getUserDto() {
         UserDto user = new UserDto();
-        user.setId(1l);
+        user.setId("1l");
         user.setFirstName("Aleesha");
         user.setMiddleName("");
         user.setLastName("Yadav");
