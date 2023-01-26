@@ -2,6 +2,7 @@ package com.maveric.userservice.service.impl;
 
 import com.maveric.userservice.converter.DtoToModelConverter;
 import com.maveric.userservice.dto.UserDto;
+import com.maveric.userservice.dto.UserEmailDto;
 import com.maveric.userservice.exception.EmailDuplicateException;
 import com.maveric.userservice.exception.UserNotFoundException;
 import com.maveric.userservice.model.User;
@@ -12,10 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Optional;
-
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,10 +29,15 @@ public class UserServiceImpl implements UserService {
     public UserDto createUser(UserDto userDto) {
         User user = dtoToModelConverter.dtoToUserCreate(userDto);
         Optional<User> existingUser = userRepository.findUserByEmail(user.getEmail());
-        if (existingUser.isPresent()) throw new EmailDuplicateException(
-                "User with email " + userDto.getEmail() + " already exist");
-        User savedUser = userRepository.save(user);
-        return dtoToModelConverter.userToDtoCreate(savedUser);
+        if (!existingUser.isPresent()) {
+
+            User savedUser = userRepository.save(user);
+            return dtoToModelConverter.userToDtoCreate(savedUser);
+
+        } else {
+            throw new EmailDuplicateException(
+                    "User with email " + userDto.getEmail() + " already exist");
+        }
     }
 
     @Override
@@ -59,18 +63,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAllUser(int pageNumber, int pageSize) {
+    public List<UserDto> getAllUsers(int page, int pageSize) {
 
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = PageRequest.of(page, pageSize);
         Page<User> userPage = userRepository.findAll(pageable);
 
         List<User> users = userPage.getContent();
-
         return users.stream().map(user -> dtoToModelConverter.userToDtoUpdate(user)).toList();
-
-
     }
 
+    @Override
     public UserDto getUserById(String id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User not found with id " + id));
@@ -78,7 +80,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByEmail(String email) {
+    public UserEmailDto getUserByEmail(String email) {
         User user = userRepository.findUserByEmail(email).orElseThrow(
                 ()-> new EmailDuplicateException("User not found with email " + email));
         return dtoToModelConverter.userToDtoEmail(user);
@@ -92,8 +94,5 @@ public class UserServiceImpl implements UserService {
         else {
             throw new UserNotFoundException("User not found with id " + id);
         }
-
     }
 }
-
-

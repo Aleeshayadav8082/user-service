@@ -1,6 +1,7 @@
 package com.maveric.userservice.converter;
 
 import com.maveric.userservice.dto.UserDto;
+import com.maveric.userservice.dto.UserEmailDto;
 import com.maveric.userservice.model.User;
 import org.springframework.stereotype.Component;
 
@@ -63,8 +64,8 @@ public class DtoToModelConverter {
         return userDto;
     }
 
-    public UserDto userToDtoEmail(User user) {
-        UserDto userDto = new UserDto();
+    public UserEmailDto userToDtoEmail(User user) {
+        UserEmailDto userDto = new UserEmailDto();
         userDto.setId(user.getId());
         userDto.setFirstName(user.getFirstName());
         userDto.setMiddleName(user.getMiddleName());

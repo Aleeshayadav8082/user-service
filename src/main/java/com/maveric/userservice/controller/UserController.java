@@ -1,6 +1,7 @@
 package com.maveric.userservice.controller;
 
 import com.maveric.userservice.dto.UserDto;
+import com.maveric.userservice.dto.UserEmailDto;
 import com.maveric.userservice.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +46,9 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<UserDto> getAllUser(@RequestParam(value = "page", defaultValue = "0", required = false) int pageNumber,
+    public List<UserDto> getAllUsers(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
                                      @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize) {
-        return userService.getAllUser(pageNumber, pageSize);
+        return userService.getAllUsers(page, pageSize);
     }
 
     @GetMapping("/users/{userId}")
@@ -56,13 +57,13 @@ public class UserController {
     }
 
     @GetMapping("/users/getUserByEmail/{emailId}")
-    public ResponseEntity<UserDto> getUserByEmail(@PathVariable("emailId") String email) {
-        return new ResponseEntity<UserDto>(userService.getUserByEmail(email), HttpStatus.OK);
+    public ResponseEntity<UserEmailDto> getUserByEmail(@PathVariable("emailId") String email) {
+        return new ResponseEntity<UserEmailDto>(userService.getUserByEmail(email), HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable("userId") String id){
-        userService.deleteUser("id");
+        userService.deleteUser(id);
         return new ResponseEntity<>("User Deleted Successfully", HttpStatus.OK);
     }
 }

@@ -1,6 +1,8 @@
 package com.maveric.userservice.converter;
 
+import com.maveric.userservice.constant.Gender;
 import com.maveric.userservice.dto.UserDto;
+import com.maveric.userservice.dto.UserEmailDto;
 import com.maveric.userservice.model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,29 +20,19 @@ class DtoToModelConverterTest {
     @InjectMocks
     private DtoToModelConverter dtoToModelConverter;
 
+    @Test
+    void dtoToUserCreate() {
+        UserDto userDto = getUserDto();
+        User user = dtoToModelConverter.dtoToUserCreate(userDto);
+        assertNotNull(user.getEmail());
+        assertSame(user.getEmail(), userDto.getEmail());
+    }
 
     @Test
     void userToDtoCreate() {
         User user = getUser();
         UserDto userDto = dtoToModelConverter.userToDtoCreate(user);
         assertNotNull(userDto.getEmail());
-        assertSame(user.getEmail(), userDto.getEmail());
-    }
-
-    @Test
-    void userToDtoEmail() {
-        User user = getUser();
-        UserDto userDto = dtoToModelConverter.userToDtoEmail(user);
-        assertNotNull(userDto.getEmail());
-        assertSame(user.getEmail(), userDto.getEmail());
-    }
-
-
-    @Test
-    void dtoToUserCreate() {
-        UserDto userDto = getUserDto();
-        User user = dtoToModelConverter.dtoToUserCreate(userDto);
-        assertNotNull(user.getEmail());
         assertSame(user.getEmail(), userDto.getEmail());
     }
 
@@ -60,6 +52,13 @@ class DtoToModelConverterTest {
         assertSame(user.getEmail(), userDto.getEmail());
     }
 
+    @Test
+    void userToDtoEmail() {
+        User user = getUser();
+        UserEmailDto userDto = dtoToModelConverter.userToDtoEmail(user);
+        assertNotNull(userDto.getEmail());
+        assertSame(user.getEmail(), userDto.getEmail());
+    }
 
     public static User getUser() {
         User user = new User();
@@ -69,8 +68,10 @@ class DtoToModelConverterTest {
         user.setAddress("Pune");
         user.setGender(Gender.FEMALE);
         user.setEmail("aleeshay@maveric-systems.com");
+        user.setPassword("Pass@word1");
         user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
         user.setPhoneNumber("8875401044");
+
         return user;
     }
 
@@ -82,8 +83,10 @@ class DtoToModelConverterTest {
         user.setAddress("Pune");
         user.setGender(Gender.FEMALE);
         user.setEmail("aleeshay@maveric-systems.com");
+        user.setPassword("Pass@word1");
         user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
         user.setPhoneNumber("8875401044");
+
         return user;
     }
 }
