@@ -63,14 +63,14 @@ class UserControllerTest {
         UserDto user = new UserDto();
         user.setId("1l");
         user.setFirstName(null);
-        user.setMiddleName("D");
-        user.setLastName("Jain");
-        user.setAddress("Mumbai");
-        user.setGender(Gender.MALE);
-        user.setEmail("hinsj@maveric-systems.com");
+        user.setMiddleName("");
+        user.setLastName("Yadav");
+        user.setAddress("Punr");
+        user.setGender(Gender.FEMALE);
+        user.setEmail("aleeshay@maveric-systems.com");
         user.setPassword("Pass@word1");
-        user.setDateOfBirth(Date.from(Instant.parse("1994-10-27T00:00:00Z")));
-        user.setPhoneNumber("9594484384");
+        user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
+        user.setPhoneNumber("8875401044");
 
         mockMvc.perform(post(API_V1_USERS)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -93,13 +93,14 @@ class UserControllerTest {
         UserDto user = new UserDto();
         user.setId("1l");
         user.setFirstName(null);
-        user.setMiddleName("D");
-        user.setLastName("Jain");
-        user.setAddress("Mumbai");
-        user.setGender(Gender.MALE);
-        user.setEmail("hinsj@maveric-systems.com");
-        user.setDateOfBirth(Date.from(Instant.parse("1994-10-27T00:00:00Z")));
-        user.setPhoneNumber("9594484384");
+        user.setMiddleName("");
+        user.setLastName("Yadav");
+        user.setAddress("Punr");
+        user.setGender(Gender.FEMALE);
+        user.setEmail("aleeshay@maveric-systems.com");
+        user.setPassword("Pass@word1");
+        user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
+        user.setPhoneNumber("8875401044");
 
         mockMvc.perform(put(API_V1_USERS + "/" +"1L")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -161,7 +162,7 @@ class UserControllerTest {
         user.setFirstName("Aleesha");
         user.setMiddleName("");
         user.setLastName("Yadav");
-        user.setAddress("Pune");
+        user.setAddress("Punr");
         user.setGender(Gender.FEMALE);
         user.setEmail("aleeshay@maveric-systems.com");
         user.setPassword("Pass@word1");
@@ -177,7 +178,7 @@ class UserControllerTest {
         user.setFirstName("Aleesha");
         user.setMiddleName("");
         user.setLastName("Yadav");
-        user.setAddress("Pune");
+        user.setAddress("Punr");
         user.setGender(Gender.FEMALE);
         user.setEmail("aleeshay@maveric-systems.com");
         user.setPassword("Pass@word1");
@@ -193,7 +194,7 @@ class UserControllerTest {
         user.setFirstName("Aleesha");
         user.setMiddleName("");
         user.setLastName("Yadav");
-        user.setAddress("Pune");
+        user.setAddress("Punr");
         user.setGender(Gender.FEMALE);
         user.setEmail("aleeshay@maveric-systems.com");
         user.setPassword("Pass@word1");

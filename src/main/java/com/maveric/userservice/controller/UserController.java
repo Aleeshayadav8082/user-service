@@ -37,12 +37,12 @@ public class UserController {
     @PostMapping("/users")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         userDto.setPassword(this.bCryptPasswordEncoder.encode(userDto.getPassword()));
-        return new ResponseEntity<UserDto>(userService.createUser(userDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/users/{userId}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("userId") String userId, @Valid @RequestBody UserDto userDto) {
-        return new ResponseEntity<UserDto>(userService.updateUser(userDto, userId), HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateUser(userDto, userId), HttpStatus.OK);
     }
 
     @GetMapping("/users")
@@ -53,12 +53,12 @@ public class UserController {
 
     @GetMapping("/users/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("userId") String id) {
-        return new ResponseEntity<UserDto>(userService.getUserById(id), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
     @GetMapping("/users/getUserByEmail/{emailId}")
     public ResponseEntity<UserEmailDto> getUserByEmail(@PathVariable("emailId") String email) {
-        return new ResponseEntity<UserEmailDto>(userService.getUserByEmail(email), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{userId}")

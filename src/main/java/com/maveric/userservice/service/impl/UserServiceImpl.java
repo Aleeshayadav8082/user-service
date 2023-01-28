@@ -44,8 +44,16 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(UserDto userDto, String userId) {
         User existingUser = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("User not Found with id " + userId));
-        if(userRepository.findUserByEmail(userDto.getEmail()).isPresent()){
-            throw new EmailDuplicateException("User with email " + userDto.getEmail() + " already exist");
+
+        if(userRepository.findUserByEmail(userDto.getEmail()).isPresent()) {
+            if(existingUser.getEmail().equals(userDto.getEmail())){
+                existingUser.setEmail(userDto.getEmail());
+            }
+            else {
+                throw new EmailDuplicateException("User with email " + userDto.getEmail() + " already exist");
+            }
+        } else {
+            existingUser.setEmail(userDto.getEmail());
         }
 
         existingUser.setFirstName(userDto.getFirstName());
@@ -55,11 +63,9 @@ public class UserServiceImpl implements UserService {
         existingUser.setGender(userDto.getGender());
         existingUser.setDateOfBirth(userDto.getDateOfBirth());
         existingUser.setPhoneNumber(userDto.getPhoneNumber());
-        existingUser.setEmail(userDto.getEmail());
 
         User updatedUser = userRepository.save(existingUser);
-        UserDto userDto1 = dtoToModelConverter.userToDtoUpdate(updatedUser);
-        return userDto1;
+        return dtoToModelConverter.userToDtoUpdate(updatedUser);
     }
 
     @Override

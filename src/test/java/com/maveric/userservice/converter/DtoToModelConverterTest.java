@@ -68,7 +68,6 @@ class DtoToModelConverterTest {
         user.setAddress("Pune");
         user.setGender(Gender.FEMALE);
         user.setEmail("aleeshay@maveric-systems.com");
-        user.setPassword("Pass@word1");
         user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
         user.setPhoneNumber("8875401044");
 
@@ -83,7 +82,6 @@ class DtoToModelConverterTest {
         user.setAddress("Pune");
         user.setGender(Gender.FEMALE);
         user.setEmail("aleeshay@maveric-systems.com");
-        user.setPassword("Pass@word1");
         user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
         user.setPhoneNumber("8875401044");
 
