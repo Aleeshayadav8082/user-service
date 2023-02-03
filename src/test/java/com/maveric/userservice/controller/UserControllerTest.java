@@ -6,6 +6,7 @@ import com.maveric.userservice.dto.UserDto;
 import com.maveric.userservice.dto.UserEmailDto;
 import com.maveric.userservice.exception.EmailDuplicateException;
 import com.maveric.userservice.exception.UserNotFoundException;
+import com.maveric.userservice.feignclient.FeignUserService;
 import com.maveric.userservice.model.User;
 import com.maveric.userservice.repository.UserRepository;
 import com.maveric.userservice.service.UserService;
@@ -40,6 +41,9 @@ class UserControllerTest {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    FeignUserService feignUserService;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -63,14 +67,14 @@ class UserControllerTest {
         UserDto user = new UserDto();
         user.setId("1l");
         user.setFirstName(null);
-        user.setMiddleName("");
-        user.setLastName("Yadav");
-        user.setAddress("Punr");
-        user.setGender(Gender.FEMALE);
-        user.setEmail("aleeshay@maveric-systems.com");
+        user.setMiddleName("D");
+        user.setLastName("Jain");
+        user.setAddress("Mumbai");
+        user.setGender(Gender.MALE);
+        user.setEmail("hinsj@maveric-systems.com");
         user.setPassword("Pass@word1");
-        user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
-        user.setPhoneNumber("8875401044");
+        user.setDateOfBirth(Date.from(Instant.parse("1994-10-27T00:00:00Z")));
+        user.setPhoneNumber("9594484384");
 
         mockMvc.perform(post(API_V1_USERS)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -84,7 +88,8 @@ class UserControllerTest {
         when(userService.updateUser(any(UserDto.class), anyString())).thenReturn(getUserDto());
         mockMvc.perform(put(API_V1_USERS + "/" +"1L")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(getUser()))).andExpect(status().isOk())
+                        .content(objectMapper.writeValueAsString(getUser())).header("userid", "1L"))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 
@@ -93,14 +98,13 @@ class UserControllerTest {
         UserDto user = new UserDto();
         user.setId("1l");
         user.setFirstName(null);
-        user.setMiddleName("");
-        user.setLastName("Yadav");
-        user.setAddress("Punr");
-        user.setGender(Gender.FEMALE);
-        user.setEmail("aleeshay@maveric-systems.com");
-        user.setPassword("Pass@word1");
-        user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
-        user.setPhoneNumber("8875401044");
+        user.setMiddleName("D");
+        user.setLastName("Jain");
+        user.setAddress("Mumbai");
+        user.setGender(Gender.MALE);
+        user.setEmail("hinsj@maveric-systems.com");
+        user.setDateOfBirth(Date.from(Instant.parse("1994-10-27T00:00:00Z")));
+        user.setPhoneNumber("9594484384");
 
         mockMvc.perform(put(API_V1_USERS + "/" +"1L")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -120,7 +124,7 @@ class UserControllerTest {
     @Test
     void getUserById() throws Exception{
         when(userService.getUserById(anyString())).thenReturn(getUserDto());
-        mockMvc.perform(get(API_V1_USERS + "/" + "1L"))
+        mockMvc.perform(get(API_V1_USERS + "/" + "1L").header("userid", "1L"))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -128,7 +132,7 @@ class UserControllerTest {
     @Test
     void shouldReturnErrorWhenWrongUserIdForGetUserByID() throws Exception{
         when(userService.getUserById(anyString())).thenThrow(new UserNotFoundException("User Not found"));
-        mockMvc.perform(get(API_V1_USERS+"/" + "2L"))
+        mockMvc.perform(get(API_V1_USERS+"/" + "2L").header("userid", "1L"))
                 .andExpect(status().isNotFound())
                 .andDo(print());
     }
@@ -151,7 +155,7 @@ class UserControllerTest {
 
     @Test
     void deleteUser() throws Exception{
-        mockMvc.perform(delete(API_V1_USERS + "/" + "1L"))
+        mockMvc.perform(delete(API_V1_USERS + "/" + "1L").header("userid", "1L"))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -159,15 +163,15 @@ class UserControllerTest {
     public static User getUser() {
         User user = new User();
         user.setId("1l");
-        user.setFirstName("Aleesha");
-        user.setMiddleName("");
-        user.setLastName("Yadav");
-        user.setAddress("Punr");
-        user.setGender(Gender.FEMALE);
-        user.setEmail("aleeshay@maveric-systems.com");
+        user.setFirstName("Hins");
+        user.setMiddleName("D");
+        user.setLastName("Jain");
+        user.setAddress("Mumbai");
+        user.setGender(Gender.MALE);
+        user.setEmail("hinsj@maveric-systems.com");
         user.setPassword("Pass@word1");
-        user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
-        user.setPhoneNumber("8875401044");
+        user.setDateOfBirth(Date.from(Instant.parse("1994-10-27T00:00:00Z")));
+        user.setPhoneNumber("9594484384");
 
         return user;
     }
@@ -175,15 +179,15 @@ class UserControllerTest {
     public static UserDto getUserDto() {
         UserDto user = new UserDto();
         user.setId("1l");
-        user.setFirstName("Aleesha");
-        user.setMiddleName("");
-        user.setLastName("Yadav");
-        user.setAddress("Punr");
-        user.setGender(Gender.FEMALE);
-        user.setEmail("aleeshay@maveric-systems.com");
+        user.setFirstName("Hins");
+        user.setMiddleName("D");
+        user.setLastName("Jain");
+        user.setAddress("Mumbai");
+        user.setGender(Gender.MALE);
+        user.setEmail("hinsj@maveric-systems.com");
         user.setPassword("Pass@word1");
-        user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
-        user.setPhoneNumber("8875401044");
+        user.setDateOfBirth(Date.from(Instant.parse("1994-10-27T00:00:00Z")));
+        user.setPhoneNumber("9594484384");
 
         return user;
     }
@@ -191,15 +195,15 @@ class UserControllerTest {
     public static UserEmailDto getUserEmailDto() {
         UserEmailDto user = new UserEmailDto();
         user.setId("1l");
-        user.setFirstName("Aleesha");
-        user.setMiddleName("");
-        user.setLastName("Yadav");
-        user.setAddress("Punr");
-        user.setGender(Gender.FEMALE);
-        user.setEmail("aleeshay@maveric-systems.com");
+        user.setFirstName("Hins");
+        user.setMiddleName("D");
+        user.setLastName("Jain");
+        user.setAddress("Mumbai");
+        user.setGender(Gender.MALE);
+        user.setEmail("hinsj@maveric-systems.com");
         user.setPassword("Pass@word1");
-        user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
-        user.setPhoneNumber("8875401044");
+        user.setDateOfBirth(Date.from(Instant.parse("1994-10-27T00:00:00Z")));
+        user.setPhoneNumber("9594484384");
 
         return user;
     }
