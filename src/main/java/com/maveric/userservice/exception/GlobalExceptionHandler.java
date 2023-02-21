@@ -2,6 +2,8 @@ package com.maveric.userservice.exception;
 
 import com.maveric.userservice.constant.MessageConstant;
 import com.maveric.userservice.dto.Error;
+import feign.FeignException;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -68,6 +71,29 @@ public class GlobalExceptionHandler {
         Error error = getError(e.getMessage(), String.valueOf(HttpStatus.NOT_FOUND.value()));
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(HttpServerErrorException.InternalServerError.class)
+    public ResponseEntity<Error> httpServerErrorException(HttpServerErrorException e) {
+        Error error = getError(e.getMessage(), String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(FeignException.NotFound.class)
+    public ResponseEntity<Error> handleFeignExceptionNotFound(FeignException e, HttpServletResponse response) {
+        String message = e.contentUTF8();
+        String decode = (String) e.contentUTF8().subSequence(message.lastIndexOf(":\""), message.length()-2);
+        Error error = getError(decode.replace(":\"", ""), String.valueOf(HttpStatus.NOT_FOUND.value()));
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FeignException.BadRequest.class)
+    public ResponseEntity<Error> handleFeignExceptionBadRequest(FeignException e, HttpServletResponse response) {
+        String message = e.contentUTF8();
+        String decode = (String) e.contentUTF8().subSequence(message.lastIndexOf(":\""), message.length()-2);
+        Error error = getError(decode.replace(":\"", ""), String.valueOf(HttpStatus.BAD_REQUEST.value()));
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     private Error getError(String message , String code){
