@@ -67,14 +67,14 @@ class UserControllerTest {
         UserDto user = new UserDto();
         user.setId("1l");
         user.setFirstName(null);
-        user.setMiddleName("D");
-        user.setLastName("Jain");
-        user.setAddress("Mumbai");
-        user.setGender(Gender.MALE);
-        user.setEmail("hinsj@maveric-systems.com");
+        user.setMiddleName("");
+        user.setLastName("Yadav");
+        user.setAddress("Pune");
+        user.setGender(Gender.FEMALE);
+        user.setEmail("aleeshay@maveric-systems.com");
         user.setPassword("Pass@word1");
-        user.setDateOfBirth(Date.from(Instant.parse("1994-10-27T00:00:00Z")));
-        user.setPhoneNumber("9594484384");
+        user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
+        user.setPhoneNumber("1234567890");
 
         mockMvc.perform(post(API_V1_USERS)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -98,13 +98,13 @@ class UserControllerTest {
         UserDto user = new UserDto();
         user.setId("1l");
         user.setFirstName(null);
-        user.setMiddleName("D");
-        user.setLastName("Jain");
-        user.setAddress("Mumbai");
-        user.setGender(Gender.MALE);
-        user.setEmail("hinsj@maveric-systems.com");
-        user.setDateOfBirth(Date.from(Instant.parse("1994-10-27T00:00:00Z")));
-        user.setPhoneNumber("9594484384");
+        user.setMiddleName("");
+        user.setLastName("Yadav");
+        user.setAddress("Pune");
+        user.setGender(Gender.FEMALE);
+        user.setEmail("aleeshay@maveric-systems.com");
+        user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
+        user.setPhoneNumber("1234567890");
 
         mockMvc.perform(put(API_V1_USERS + "/" +"1L")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -163,15 +163,15 @@ class UserControllerTest {
     public static User getUser() {
         User user = new User();
         user.setId("1l");
-        user.setFirstName("Hins");
-        user.setMiddleName("D");
-        user.setLastName("Jain");
-        user.setAddress("Mumbai");
+        user.setFirstName("Aleesha");
+        user.setMiddleName("");
+        user.setLastName("Yadav");
+        user.setAddress("Pune");
         user.setGender(Gender.MALE);
-        user.setEmail("hinsj@maveric-systems.com");
+        user.setEmail("aleeshay@maveric-systems.com");
         user.setPassword("Pass@word1");
-        user.setDateOfBirth(Date.from(Instant.parse("1994-10-27T00:00:00Z")));
-        user.setPhoneNumber("9594484384");
+        user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
+        user.setPhoneNumber("1234567890");
 
         return user;
     }
@@ -179,15 +179,15 @@ class UserControllerTest {
     public static UserDto getUserDto() {
         UserDto user = new UserDto();
         user.setId("1l");
-        user.setFirstName("Hins");
-        user.setMiddleName("D");
-        user.setLastName("Jain");
-        user.setAddress("Mumbai");
-        user.setGender(Gender.MALE);
-        user.setEmail("hinsj@maveric-systems.com");
+        user.setFirstName("Aleesha");
+        user.setMiddleName("");
+        user.setLastName("Yadav");
+        user.setAddress("Pune");
+        user.setGender(Gender.FEMALE);
+        user.setEmail("aleeshay@maveric-systems.com");
         user.setPassword("Pass@word1");
-        user.setDateOfBirth(Date.from(Instant.parse("1994-10-27T00:00:00Z")));
-        user.setPhoneNumber("9594484384");
+        user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
+        user.setPhoneNumber("1234567890");
 
         return user;
     }
@@ -195,15 +195,15 @@ class UserControllerTest {
     public static UserEmailDto getUserEmailDto() {
         UserEmailDto user = new UserEmailDto();
         user.setId("1l");
-        user.setFirstName("Hins");
-        user.setMiddleName("D");
-        user.setLastName("Jain");
-        user.setAddress("Mumbai");
-        user.setGender(Gender.MALE);
-        user.setEmail("hinsj@maveric-systems.com");
+        user.setFirstName("Aleesha");
+        user.setMiddleName("");
+        user.setLastName("Yadav");
+        user.setAddress("Pune");
+        user.setGender(Gender.FEMALE);
+        user.setEmail("aleeshay@maveric-systems.com");
         user.setPassword("Pass@word1");
-        user.setDateOfBirth(Date.from(Instant.parse("1994-10-27T00:00:00Z")));
-        user.setPhoneNumber("9594484384");
+        user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
+        user.setPhoneNumber("1234567890");
 
         return user;
     }

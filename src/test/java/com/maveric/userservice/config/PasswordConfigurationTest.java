@@ -9,14 +9,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class PasswordConfigTest {
+class PasswordConfigurationTest {
 
     @InjectMocks
-    private PasswordConfig passwordConfig;
+    private PasswordConfiguration passwordConfiguration;
 
     @Test
     void passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = passwordConfig.passwordEncoder();
+        BCryptPasswordEncoder bCryptPasswordEncoder = passwordConfiguration.passwordEncoder();
         assertNotNull(bCryptPasswordEncoder);
     }
 }
