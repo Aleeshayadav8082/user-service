@@ -4,8 +4,6 @@ import com.maveric.userservice.constant.MessageConstant;
 import com.maveric.userservice.dto.Error;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -20,13 +18,10 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Error> handleMethodArgsNotValidException(MethodArgumentNotValidException ex) {
         Error error = getError(ex.getBindingResult().getAllErrors().get(0).getDefaultMessage(),
                 String.valueOf(HttpStatus.BAD_REQUEST));
-        logger.error(ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
@@ -34,7 +29,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EmailDuplicateException.class)
     public ResponseEntity<Error> handleEmailDuplication(EmailDuplicateException e) {
         Error error = getError(e.getMessage(), String.valueOf(HttpStatus.BAD_REQUEST.value()));
-        logger.error(e.getMessage());
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
@@ -42,22 +36,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Error> handleUserNotFound(UserNotFoundException e) {
         Error error = getError(e.getMessage(), String.valueOf(HttpStatus.NOT_FOUND.value()));
-        logger.error(e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserIdMismatchException.class)
     public ResponseEntity<Error> handleUserIdMismatch(UserIdMismatchException e) {
         Error error = getError(e.getMessage(), String.valueOf(HttpStatus.NOT_FOUND.value()));
-        logger.error(e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Error> handleFormatException(HttpMessageNotReadableException e) {
         Error error = getError(MessageConstant.GENDER_ERROR, String.valueOf(HttpStatus.BAD_REQUEST));
-
-        logger.error(MessageConstant.GENDER_ERROR);
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
@@ -66,16 +56,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Error> nphandlerFoundException(NoHandlerFoundException e) {
         Error error = getError(e.getMessage(), String.valueOf(HttpStatus.NOT_FOUND.value()));
 
-        logger.error(e.getMessage());
-
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Error> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
         Error error = getError(e.getMessage(), String.valueOf(HttpStatus.BAD_REQUEST.value()));
-
-        logger.error(e.getMessage());
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
@@ -84,16 +70,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Error> missingPathVariableException(MissingPathVariableException e) {
         Error error = getError(e.getMessage(), String.valueOf(HttpStatus.NOT_FOUND.value()));
 
-        logger.error(e.getMessage());
-
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(HttpServerErrorException.InternalServerError.class)
     public ResponseEntity<Error> httpServerErrorException(HttpServerErrorException e) {
         Error error = getError(e.getMessage(), String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-
-        logger.error(e.getMessage());
 
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
