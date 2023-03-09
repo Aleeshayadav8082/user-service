@@ -36,11 +36,11 @@ public class UserServiceImpl implements UserService {
         if (!existingUser.isPresent()) {
 
             User savedUser = userRepository.save(user);
-            logger.info("User created with email " + user.getEmail());
+            logger.info("User created with email");
             return dtoToModelConverter.userToDtoCreate(savedUser);
 
         } else {
-            logger.info("Email already exist " + user.getEmail());
+            logger.info("Email already exist");
             throw new EmailDuplicateException(
                     "User with email " + userDto.getEmail() + " already exist");
         }
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
                 existingUser.setEmail(userDto.getEmail());
             }
             else {
-                logger.info("Email already exist " + userDto.getEmail());
+                logger.info("Email already exist");
                 throw new EmailDuplicateException("User with email " + userDto.getEmail() + " already exist");
             }
         } else {
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
     public UserEmailDto getUserByEmail(String email) {
         User user = userRepository.findUserByEmail(email).orElseThrow(
                 ()-> new EmailDuplicateException("User not found with email " + email));
-        logger.info("User found with email " + user.getEmail());
+        logger.info("User found with email");
         return dtoToModelConverter.userToDtoEmail(user);
     }
 

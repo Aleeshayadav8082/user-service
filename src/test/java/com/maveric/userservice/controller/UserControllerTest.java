@@ -74,7 +74,7 @@ class UserControllerTest {
         user.setEmail("aleeshay@maveric-systems.com");
         user.setPassword("Pass@word1");
         user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
-        user.setPhoneNumber("1234567890");
+        user.setPhoneNumber("8875401044");
 
         mockMvc.perform(post(API_V1_USERS)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -94,6 +94,16 @@ class UserControllerTest {
     }
 
     @Test
+    void errorWithDifferentUserIdForUpdateUser() throws Exception {
+        when(userService.updateUser(any(UserDto.class), anyString())).thenReturn(getUserDto());
+        mockMvc.perform(put(API_V1_USERS + "/" +"1L")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(getUser())).header("userid", "2L"))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
+    @Test
     void shouldThrowErrorWhenUpdateUserDetailsAreWrong() throws Exception{
         UserDto user = new UserDto();
         user.setId("1l");
@@ -104,7 +114,7 @@ class UserControllerTest {
         user.setGender(Gender.FEMALE);
         user.setEmail("aleeshay@maveric-systems.com");
         user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
-        user.setPhoneNumber("1234567890");
+        user.setPhoneNumber("8875401044");
 
         mockMvc.perform(put(API_V1_USERS + "/" +"1L")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -140,7 +150,7 @@ class UserControllerTest {
     @Test
     void getUserByEmail() throws Exception{
         when(userService.getUserByEmail(any())).thenReturn(getUserEmailDto());
-        mockMvc.perform(get(API_V1_USERS_EMAIL + "/hinsj@maveric-systems.com"))
+        mockMvc.perform(get(API_V1_USERS_EMAIL + "/aleeshay@maveric-systems.com"))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -148,7 +158,7 @@ class UserControllerTest {
     @Test
     void shouldReturnErrorWhenWWrongEmailForGetUserByEmail() throws Exception{
         when(userService.getUserByEmail(anyString())).thenThrow(new EmailDuplicateException("User not found with email"));
-        mockMvc.perform(get(API_V1_USERS_EMAIL+"/hinsj@gmail.com"))
+        mockMvc.perform(get(API_V1_USERS_EMAIL+"/aleeshay@gmail.com"))
                 .andExpect(status().isBadRequest())
                 .andDo(print());
     }
@@ -160,6 +170,13 @@ class UserControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    void shouldThrowErrorFordeleteUserWhenWrongUserId() throws Exception{
+        mockMvc.perform(delete(API_V1_USERS + "/" + "1L").header("userid", "2L"))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
     public static User getUser() {
         User user = new User();
         user.setId("1l");
@@ -167,11 +184,11 @@ class UserControllerTest {
         user.setMiddleName("");
         user.setLastName("Yadav");
         user.setAddress("Pune");
-        user.setGender(Gender.MALE);
+        user.setGender(Gender.FEMALE);
         user.setEmail("aleeshay@maveric-systems.com");
         user.setPassword("Pass@word1");
         user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
-        user.setPhoneNumber("1234567890");
+        user.setPhoneNumber("8875401044");
 
         return user;
     }
@@ -187,7 +204,7 @@ class UserControllerTest {
         user.setEmail("aleeshay@maveric-systems.com");
         user.setPassword("Pass@word1");
         user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
-        user.setPhoneNumber("1234567890");
+        user.setPhoneNumber("8875401044");
 
         return user;
     }
@@ -203,7 +220,7 @@ class UserControllerTest {
         user.setEmail("aleeshay@maveric-systems.com");
         user.setPassword("Pass@word1");
         user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
-        user.setPhoneNumber("1234567890");
+        user.setPhoneNumber("8875401044");
 
         return user;
     }

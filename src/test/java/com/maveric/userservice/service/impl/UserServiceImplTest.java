@@ -4,6 +4,8 @@ import com.maveric.userservice.constant.Gender;
 import com.maveric.userservice.converter.DtoToModelConverter;
 import com.maveric.userservice.dto.UserDto;
 import com.maveric.userservice.dto.UserEmailDto;
+import com.maveric.userservice.exception.EmailDuplicateException;
+import com.maveric.userservice.exception.UserNotFoundException;
 import com.maveric.userservice.model.User;
 import com.maveric.userservice.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -86,10 +88,10 @@ class UserServiceImplTest {
 
     @Test
     void getUserByEmail(){
-        when(mockedUserRepository.findUserByEmail("hinsj@maveric-systems.com")).thenReturn(Optional.of(getUser()));
+        when(mockedUserRepository.findUserByEmail("aleeshay@maveric-systems.com")).thenReturn(Optional.of(getUser()));
         when(dtoToModelConverter.userToDtoEmail(any(User.class))).thenReturn(getUserEmailDto());
 
-        UserEmailDto user = mockedUserService.getUserByEmail("hinsj@maveric-systems.com");
+        UserEmailDto user = mockedUserService.getUserByEmail("aleeshay@maveric-systems.com");
 
         assertNotNull(user);
         assertSame(user.getEmail(),getUser().getEmail());
@@ -105,6 +107,39 @@ class UserServiceImplTest {
         verify(mockedUserRepository).deleteById("1L");
     }
 
+    @Test
+    void throwErrorWhenUserIdNotFoundForDeleteUser(){
+        Throwable error = assertThrows(UserNotFoundException.class,()->mockedUserService.deleteUser("1L"));
+        assertEquals("User not found with id 1L",error.getMessage());
+    }
+
+    @Test
+    void throwErrorWhenEmailNotFoundForGetUserByEmail(){
+        Throwable error = assertThrows(EmailDuplicateException.class,()->mockedUserService.getUserByEmail("hinsj@maveric.com"));
+        assertEquals("User not found with email aleeshay@maveric.com", error.getMessage());
+    }
+
+    @Test
+    void throwErrorWhenUserNotFoundForGetUserById(){
+        Throwable error = assertThrows(UserNotFoundException.class,()->mockedUserService.getUserById("1L"));
+        assertEquals("User not found with id 1L",error.getMessage());
+    }
+
+    @Test
+    void throwErrorWhenEmailNotFoundForCreateUser(){
+        when(dtoToModelConverter.dtoToUserCreate(any(UserDto.class))).thenReturn(getUser());
+        when(mockedUserRepository.findUserByEmail(any())).thenReturn(Optional.of(getUser()));
+
+        Throwable error = assertThrows(EmailDuplicateException.class,()->mockedUserService.createUser(getUserDto()));
+        assertEquals("User with email aleeshay@maveric-systems.com already exist", error.getLocalizedMessage());
+    }
+
+    @Test
+    void throwErrorWhenIdNotFoundForUpdateUser(){
+        Throwable error = assertThrows(UserNotFoundException.class,()->mockedUserService.updateUser(getUserDto(),"1L"));
+        assertEquals("User not Found with id 1L", error.getMessage());
+    }
+
     public static User getUser() {
         User user = new User();
         user.setFirstName("Aleesha");
@@ -113,6 +148,7 @@ class UserServiceImplTest {
         user.setAddress("Pune");
         user.setGender(Gender.FEMALE);
         user.setEmail("aleeshay@maveric-systems.com");
+        user.setPassword("Pass@word1");
         user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
         user.setPhoneNumber("8875401044");
 
@@ -127,6 +163,7 @@ class UserServiceImplTest {
         user.setAddress("Pune");
         user.setGender(Gender.FEMALE);
         user.setEmail("aleeshay@maveric-systems.com");
+        user.setPassword("Pass@word1");
         user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
         user.setPhoneNumber("8875401044");
 
@@ -141,6 +178,7 @@ class UserServiceImplTest {
         user.setAddress("Pune");
         user.setGender(Gender.FEMALE);
         user.setEmail("aleeshay@maveric-systems.com");
+        user.setPassword("Pass@word1");
         user.setDateOfBirth(Date.from(Instant.parse("1994-10-22T00:00:00Z")));
         user.setPhoneNumber("8875401044");
 
