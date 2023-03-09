@@ -115,7 +115,7 @@ class UserServiceImplTest {
 
     @Test
     void throwErrorWhenEmailNotFoundForGetUserByEmail(){
-        Throwable error = assertThrows(EmailDuplicateException.class,()->mockedUserService.getUserByEmail("hinsj@maveric.com"));
+        Throwable error = assertThrows(EmailDuplicateException.class,()->mockedUserService.getUserByEmail("aleeshay@maveric.com"));
         assertEquals("User not found with email aleeshay@maveric.com", error.getMessage());
     }
 
